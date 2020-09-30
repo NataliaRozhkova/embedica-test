@@ -28,7 +28,6 @@ public class PutCarHandler extends BaseHandler<String, String> implements HttpHa
             json.append((char) jsonByte);
         }
         stream.close();
-        System.out.println(json);
         return json.toString();
     }
 
