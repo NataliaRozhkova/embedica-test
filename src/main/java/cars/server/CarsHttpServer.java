@@ -1,10 +1,7 @@
 package cars.server;
 
 import cars.data.repository.Repository;
-import cars.server.handlers.DeleteCarHandler;
-import cars.server.handlers.GetCarsHandler;
-import cars.server.handlers.PutCarHandler;
-import cars.server.handlers.StartServiceHandler;
+import cars.server.handlers.*;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
@@ -21,6 +18,7 @@ public class CarsHttpServer {
         server.createContext("/", new StartServiceHandler());
         server.createContext("/list", new GetCarsHandler(repository));
         server.createContext("/delete", new DeleteCarHandler(repository));
+        server.createContext("/stat", new GetStatisticHandler(repository));
         server.setExecutor(Executors.newFixedThreadPool(10));
     }
 

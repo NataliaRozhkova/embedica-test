@@ -2,7 +2,9 @@ package cars.data.db;
 
 import cars.data.Response;
 import cars.data.db.dao.CarDAO;
+import cars.data.db.dao.StatisticDAO;
 import cars.entity.Car;
+import cars.entity.Statistic;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.*;
@@ -41,6 +43,10 @@ public class CarDBSource {
 
     public Response<List<Car>> getAll(final String sortParam, final int limit, final int offset) {
         return new CarDAO(dataSource).readAll(sortParam, limit, offset);
+    }
+
+    public Response<Statistic> getStatistic() {
+        return new StatisticDAO(dataSource).read();
     }
 
     public BasicDataSource getDataSource() {
@@ -120,7 +126,12 @@ public class CarDBSource {
     }
 
     private final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS ";
-    private final String TABLE_DESCRIPTION = " (id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY, number varchar(255) UNIQUE, brand varchar(255), color varchar(255), year_of_issue integer)";
+    private final String TABLE_DESCRIPTION = " (id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY, " +
+            "number varchar(255) UNIQUE, " +
+            "brand varchar(255), " +
+            "color varchar(255), " +
+            "year_of_issue integer," +
+            "date timestamp)";
 
     private final int DATABASE_NAME = 1;
     private final int DB_TABLE_NAME = 3;

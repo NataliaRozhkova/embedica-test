@@ -175,7 +175,7 @@ public class CarDAO {
         GET_GET_WITH_ORDER_BRAND("SELECT * FROM cars ORDER BY brand LIMIT (?) OFFSET (?)"),
         GET_GET_WITH_ORDER_YEAR("SELECT * FROM cars ORDER BY year_of_issue LIMIT (?) OFFSET (?)"),
         GET("SELECT * FROM cars ORDER BY (?) LIMIT (?) OFFSET (?)"),
-        INSERT("INSERT INTO cars (number, brand, color, year_of_issue) VALUES ( (?), (?), (?), (?))"),
+        INSERT("INSERT INTO cars (number, brand, color, year_of_issue, date) VALUES ( (?), (?), (?), (?), CURRENT_TIMESTAMP )"),
         DELETE("DELETE FROM cars WHERE id = (?)");
 
         String QUERY;

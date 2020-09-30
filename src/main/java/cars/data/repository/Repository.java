@@ -3,6 +3,7 @@ package cars.data.repository;
 import cars.data.Response;
 import cars.data.db.CarDBSource;
 import cars.entity.Car;
+import cars.entity.Statistic;
 
 import java.util.List;
 
@@ -24,6 +25,10 @@ public class Repository {
 
     public Response<List<Car>> getAll() {
         return db.getAll();
+    }
+
+    public Response<Statistic> getStatistic() {
+        return  db.getStatistic();
     }
 
 
