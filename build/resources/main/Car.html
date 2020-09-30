@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta  charset=UTF-8">
+    <title>Справочник автомобилей</title>
+</head>
+<script src="sendJSON.js"></script>
+<body>
+<div id="header">
+    <h1>Справочник автомобилей</h1>
+    <p>
+        <a href="http://localhost:8001/list">Вывести список всех автомобилей без параметров</a></p>
+    <form action="http://localhost:8001/list" method="get">
+        <p><b>Вывести список автомобилей с дополнительными параметрами</b><Br>
+        <p>Выберите параметр для сортировки:<Br>
+            <input type="radio" name="sort_parameter" value="id"> ID<Br>
+            <input type="radio" name="sort_parameter" value="brand"> Марка автомобиля<Br>
+            <input type="radio" name="sort_parameter" value="color"> Цвет<Br>
+            <input type="radio" name="sort_parameter" value="number"> Номер<Br>
+            <input type="radio" name="sort_parameter" value="year_of_issue">Год выпуска<Br>
+        </p>
+        <p><input type="number" name="limit">Сколько элементов вывести<Br>
+        <p><input type="number" name="offset">Начиная с какого элеемента выводить </p>
+        <p><input type="submit"value="Вывести"></p>
+    </form>
+    <p><b>Добавить автомобиль:</b><Br>
+    </p>
+    <p><input type="text" id="number" placeholder="Номер"><Br>
+    <p><input type="text" id="brand" placeholder="Марка автомобиля"></p>
+    <p><input type="text" id="color" placeholder="Цвет"></p>
+    <p><input type="number" id="year_of_issue" placeholder="Год выпуска"></p>
+    <p>
+        <button onclick="submitForm()"> Отправить</button>
+    </p>
+    <p class="result" style="color:blue"></p>
+
+    <form action="http://localhost:8001/delete" method="get">
+        <p><b>Удалить автомобиль:</b><Br>
+        <p><input type="number" name="id">ID автомобиля<Br>
+        <p><input type="submit"  value="Удалить"></p>
+    </form>
+</div>
+</body>
+</html>
