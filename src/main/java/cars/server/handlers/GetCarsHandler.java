@@ -29,7 +29,9 @@ public class GetCarsHandler extends BaseHandler<HashMap<String, String>, List<Ca
             HashMap<String, String> parameters = new HashMap<>();
             for (String parameter : httpExchangeParameters.split("&")) {
                 String[] pair = parameter.split("=");
-                parameters.put(pair[0], pair[1]);
+                if (pair.length > 1) {
+                    parameters.put(pair[0], pair[1]);
+                }
             }
             return parameters;
         } else return null;
@@ -43,10 +45,7 @@ public class GetCarsHandler extends BaseHandler<HashMap<String, String>, List<Ca
     @Override
     Response<List<Car>> requestRepository(HashMap<String, String> requestParameter) {
         if (requestParameter != null) {
-            return repository.getAll(
-                    requestParameter.get(SORT_PARAMETER),
-                    Integer.parseInt(requestParameter.get(LIMIT)),
-                    Integer.parseInt(requestParameter.get(OFFSET)));
+            return repository.getAll(requestParameter);
         } else {
             return (repository.getAll());
         }

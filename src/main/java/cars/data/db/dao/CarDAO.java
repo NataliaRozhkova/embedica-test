@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class CarDAO {
@@ -15,8 +16,6 @@ public class CarDAO {
     private static final int COLUMN_CAR_BRAND = 2;
     private static final int COLUMN_CAR_COLOR = 3;
     private static final int COLUMN_YEAR_OF_ISSUE = 4;
-    private static final int LIMIT = 1;
-    private static final int OFFSET = 2;
     private static final int ID = 1;
     private static final int SUCCESS = 1;
     private static final int ERROR = 0;
@@ -70,13 +69,13 @@ public class CarDAO {
         return response;
     }
 
-    public Response<List<Car>> readAll(final String sortParameter, final int limit, final int offset) {
+    public Response<List<Car>> readAll(final HashMap<String, String> parameters) {
         ArrayList<Car> cars;
         Connection connection = null;
         Response<List<Car>> response;
         try {
             connection = dbSource.getConnection();
-            PreparedStatement statement = setStatementGet(connection, sortParameter, limit, offset);
+            PreparedStatement statement = setStatementGet(connection, parameters);
             cars = mappingToCar(statement.executeQuery());
             response = new Response<>(cars, Response.State.SUCCESS);
         } catch (SQLException exception) {
@@ -126,33 +125,62 @@ public class CarDAO {
         return statement;
     }
 
-    private PreparedStatement setStatementGet(final Connection connection, final String sortParameter, final int limit, final int offset) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(selectSortingMethod(sortParameter).QUERY);
-        statement.setInt(LIMIT, limit);
-        statement.setInt(OFFSET, offset);
-        return statement;
+    private PreparedStatement setStatementGet(final Connection connection, final HashMap<String, String> parameters) throws SQLException {
+        return connection.prepareStatement(generateSelectQuery(parameters));
     }
 
-    private SQLCars selectSortingMethod(final String sortParameter) {
-        switch (sortParameter) {
-            case "id": {
-                return SQLCars.GET_GET_WITH_ORDER_ID;
-            }
-            case "brand": {
-                return SQLCars.GET_GET_WITH_ORDER_BRAND;
-            }
-            case "color": {
-                return SQLCars.GET_WITH_ORDER_COLOR;
-            }
-            case "year_of_issue": {
-                return SQLCars.GET_GET_WITH_ORDER_YEAR;
-            }
-            case "number": {
-                return SQLCars.GET_GET_WITH_ORDER_NUMBER;
-            }
-            default:
-                return SQLCars.GET;
+    private String generateSelectQuery(final HashMap<String, String> parameters) {
+        StringBuilder query = new StringBuilder();
+        query.append("SELECT * FROM cars ");
+        if (parameters.containsKey("number") || parameters.containsKey("color") || parameters.containsKey("year_of_issue") || parameters.containsKey("brand")) {
+            query.append("WHERE ");
         }
+        if (parameters.containsKey("number")) {
+            query.append("number = '")
+                    .append(parameters.get("number"))
+                    .append("' ");
+        }
+        if (parameters.containsKey("color")) {
+            if (parameters.containsKey("number")) {
+                query.append(" and ");
+            }
+            query.append("color = '")
+                    .append(parameters.get("color"))
+                    .append("' ");
+        }
+        if (parameters.containsKey("year_of_issue")) {
+            if (parameters.containsKey("number") || parameters.containsKey("color")) {
+                query.append(" and ");
+            }
+            query.append("year_of_issue = '")
+                    .append(parameters.get("year_of_issue"))
+                    .append("' ");
+        }
+        if (parameters.containsKey("brand")) {
+            if (parameters.containsKey("number") || parameters.containsKey("color") || parameters.containsKey("year_of_issue")) {
+                query.append(" and ");
+            }
+            query.append("brand = '")
+                    .append(parameters.get("brand"))
+                    .append("' ");
+        }
+        if (parameters.containsKey("sort_parameter")) {
+            query.append("ORDER BY ")
+                    .append(parameters.get("sort_parameter"))
+                    .append(" ");
+        }
+        if (parameters.containsKey("limit")) {
+            query.append("LIMIT ")
+                    .append(parameters.get("limit"))
+                    .append(" ");
+        }
+        if (parameters.containsKey("offset")) {
+            query.append("OFFSET ")
+                    .append(parameters.get("offset"))
+                    .append(" ");
+        }
+        return query.append(";").toString();
+
     }
 
     private void closeConnection(Connection connection) {
@@ -177,12 +205,6 @@ public class CarDAO {
 
     public enum SQLCars {
         GET_ALL("SELECT * FROM cars"),
-        GET_WITH_ORDER_COLOR("SELECT * FROM cars ORDER BY color LIMIT (?) OFFSET (?)"),
-        GET_GET_WITH_ORDER_ID("SELECT * FROM cars ORDER BY id LIMIT (?) OFFSET (?)"),
-        GET_GET_WITH_ORDER_NUMBER("SELECT * FROM cars ORDER BY number LIMIT (?) OFFSET (?)"),
-        GET_GET_WITH_ORDER_BRAND("SELECT * FROM cars ORDER BY brand LIMIT (?) OFFSET (?)"),
-        GET_GET_WITH_ORDER_YEAR("SELECT * FROM cars ORDER BY year_of_issue LIMIT (?) OFFSET (?)"),
-        GET("SELECT * FROM cars ORDER BY (?) LIMIT (?) OFFSET (?)"),
         INSERT("INSERT INTO cars (number, brand, color, year_of_issue, date) VALUES ( (?), (?), (?), (?), CURRENT_TIMESTAMP )"),
         DELETE("DELETE FROM cars WHERE id = (?)");
 

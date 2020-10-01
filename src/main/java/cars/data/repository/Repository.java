@@ -5,6 +5,7 @@ import cars.data.db.CarDBDataSource;
 import cars.data.entity.Car;
 import cars.data.entity.Statistic;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Repository {
@@ -19,8 +20,8 @@ public class Repository {
         return db.delete(carId);
     }
 
-    public Response<List<Car>> getAll(final String sortParam, final int limit, final int offset) {
-        return db.getAll(sortParam, limit, offset);
+    public Response<List<Car>> getAll(final HashMap<String, String> parameters) {
+        return db.getAll(parameters);
     }
 
     public Response<List<Car>> getAll() {

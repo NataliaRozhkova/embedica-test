@@ -28,8 +28,8 @@
 <body>
 <div id="header">
     <h1>Cars catalog</h1>
-    <p>
-        <a href="http://localhost:8001/list">List all cars without parameters</a></p>
+    <p><a href="http://localhost:8001/stat">Show statistics on the cars database</a></p>
+    <p><a href="http://localhost:8001/list">List all cars without parameters</a></p>
     <form action="http://localhost:8001/list" method="get">
         <p><b>List cars with additional parameters</b><Br>
         <p>Select an option to sort:<Br>
@@ -41,6 +41,11 @@
         </p>
         <p><input type="number" name="limit">Number of displayed items<Br>
         <p><input type="number" name="offset">Initial element</p>
+        <p><b>Parameters to filtered</b><Br>
+        <p><input type="text" name="number">Number<Br>
+        <p><input type="text" name="brand">Brand<Br>
+        <p><input type="text" name="color">Color</p>
+        <p><input type="number" name="year_of_issue">Year of issue</p>
         <p><input type="submit" value="Submit"></p>
     </form>
     <p><b>Add car:</b><Br>
@@ -60,8 +65,7 @@
         <p><input type="submit" value="Delete"></p>
     </form>
 
-    <p>
-        <a href="http://localhost:8001/stat">Show statistics on the cars database</a></p>
+
 </div>
 </body>
 </html>

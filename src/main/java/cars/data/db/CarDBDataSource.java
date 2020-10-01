@@ -8,6 +8,7 @@ import cars.data.entity.Statistic;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.*;
+import java.util.HashMap;
 import java.util.List;
 
 public class CarDBDataSource {
@@ -49,8 +50,8 @@ public class CarDBDataSource {
         return new CarDAO(dataSource).readAll();
     }
 
-    public Response<List<Car>> getAll(final String sortParam, final int limit, final int offset) {
-        return new CarDAO(dataSource).readAll(sortParam, limit, offset);
+    public Response<List<Car>> getAll(final HashMap<String, String> parameters) {
+        return new CarDAO(dataSource).readAll(parameters);
     }
 
     public Response<Statistic> getStatistic() {
