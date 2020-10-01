@@ -1,7 +1,7 @@
 package cars.data.repository;
 
 import cars.data.Response;
-import cars.data.db.CarDBSource;
+import cars.data.db.CarDBDataSource;
 import cars.data.entity.Car;
 import cars.data.entity.Statistic;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Repository {
 
-    CarDBSource db = new CarDBSource();
+    CarDBDataSource db = new CarDBDataSource();
 
     public Response<String> put(final Car car) {
         return db.create(car);

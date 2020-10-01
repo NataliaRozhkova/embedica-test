@@ -10,7 +10,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import java.sql.*;
 import java.util.List;
 
-public class CarDBSource {
+public class CarDBDataSource {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/";
     private static final String USER = "user1";
@@ -33,7 +33,7 @@ public class CarDBSource {
 
     private final BasicDataSource dataSource;
 
-    public CarDBSource() {
+    public CarDBDataSource() {
         this.dataSource = initDataSource();
     }
 

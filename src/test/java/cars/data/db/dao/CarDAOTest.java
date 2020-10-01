@@ -1,7 +1,7 @@
 package cars.data.db.dao;
 
 import cars.data.Response;
-import cars.data.db.CarDBSource;
+import cars.data.db.CarDBDataSource;
 import cars.data.entity.Car;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,12 +15,12 @@ import java.util.List;
 
 class CarDAOTest {
 
-    private static CarDBSource db;
+    private static CarDBDataSource db;
 
     @BeforeAll
     public static void createDB() {
 
-        db = new CarDBSource();
+        db = new CarDBDataSource();
 
     }
 
