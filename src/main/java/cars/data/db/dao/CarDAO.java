@@ -82,7 +82,7 @@ public class CarDAO {
         } catch (SQLException exception) {
             exception.printStackTrace();
             System.err.println(exception.getClass().getName() + ": " + exception.getMessage());
-            response = new Response<>(null, Response.State.SUCCESS);
+            response = new Response<>(null, Response.State.ERROR);
         } finally {
             if (connection != null) {
                 closeConnection(connection);
@@ -102,7 +102,7 @@ public class CarDAO {
             if (result == SUCCESS) {
                 response = new Response<>("Success", Response.State.SUCCESS);
             } else if (result == ERROR) {
-                response = new Response<>("Object not found", Response.State.SUCCESS);
+                response = new Response<>("Object not found", Response.State.ERROR);
             } else {
                 response = new Response<>("Error", Response.State.ERROR);
             }

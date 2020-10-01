@@ -13,7 +13,7 @@ import java.util.List;
 public class CarDBSource {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/";
-    private static final String USER = "carsuser";
+    private static final String USER = "user1";
     private static final String PASSWORD = "123";
     private static final String DB_NAME = "cars";
     private static final String DB_TABLE = "cars";
