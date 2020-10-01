@@ -28,7 +28,7 @@ public class StartServiceHandler implements HttpHandler {
     }
 
     private static String getFile() {
-        InputStream htmlFile = StartServiceHandler.class.getClassLoader().getResourceAsStream("ex.html");
+        InputStream htmlFile = StartServiceHandler.class.getClassLoader().getResourceAsStream("Cars.html");
         StringBuilder result = new StringBuilder();
         if (htmlFile != null) {
             Scanner scanner = new Scanner(htmlFile, StandardCharsets.UTF_8);

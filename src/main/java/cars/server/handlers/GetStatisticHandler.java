@@ -2,8 +2,8 @@ package cars.server.handlers;
 
 import cars.data.Response;
 import cars.data.repository.Repository;
-import cars.entity.Statistic;
-import cars.entity.StatisticJSONConverter;
+import cars.data.entity.Statistic;
+import cars.data.entity.StatisticJSONConverter;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 

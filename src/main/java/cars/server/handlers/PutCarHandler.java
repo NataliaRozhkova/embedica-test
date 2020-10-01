@@ -1,7 +1,7 @@
 package cars.server.handlers;
 
 import cars.data.Response;
-import cars.entity.CarJSONConverter;
+import cars.data.entity.CarJSONConverter;
 import cars.data.repository.Repository;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;

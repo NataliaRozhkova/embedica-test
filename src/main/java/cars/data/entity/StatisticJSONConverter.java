@@ -1,4 +1,4 @@
-package cars.entity;
+package cars.data.entity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

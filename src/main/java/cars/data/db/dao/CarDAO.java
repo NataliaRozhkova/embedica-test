@@ -1,7 +1,7 @@
 package cars.data.db.dao;
 
 import cars.data.Response;
-import cars.entity.Car;
+import cars.data.entity.Car;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.jetbrains.annotations.NotNull;
 

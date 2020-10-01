@@ -2,8 +2,8 @@ package cars.data.repository;
 
 import cars.data.Response;
 import cars.data.db.CarDBSource;
-import cars.entity.Car;
-import cars.entity.Statistic;
+import cars.data.entity.Car;
+import cars.data.entity.Statistic;
 
 import java.util.List;
 

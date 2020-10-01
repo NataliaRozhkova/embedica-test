@@ -2,7 +2,7 @@ package cars.data.db.dao;
 
 import cars.data.Response;
 import cars.data.db.CarDBSource;
-import cars.entity.Car;
+import cars.data.entity.Car;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package cars.entity;
+package cars.data.entity;
 
 import junit.framework.TestCase;
 
@@ -24,7 +24,7 @@ public class CarJSONConverterTest extends TestCase {
                 .append("}");
         String convertJson = CarJSONConverter.convertToJSON(car1);
         assertEquals(json.toString(), convertJson);
-        assertNotSame(json.toString(), car2);
+        assertNotSame(json.toString(), CarJSONConverter.convertToJSON(car2));
     }
 
     public void testDeserialize() {
@@ -47,13 +47,11 @@ public class CarJSONConverterTest extends TestCase {
         list.add(car1);
         list.add(car2);
 
-        StringBuilder json = new StringBuilder();
-        json.append("[")
-                .append(CarJSONConverter.convertToJSON(car1))
-                .append(",")
-                .append(CarJSONConverter.convertToJSON(car2))
-                .append("]");
-
-        assertEquals(json.toString(), CarJSONConverter.convertToJSON(list));
+        String json = "[" +
+                CarJSONConverter.convertToJSON(car1) +
+                "," +
+                CarJSONConverter.convertToJSON(car2) +
+                "]";
+        assertEquals(json, CarJSONConverter.convertToJSON(list));
     }
 }

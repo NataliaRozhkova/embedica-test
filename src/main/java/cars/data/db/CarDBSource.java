@@ -3,8 +3,8 @@ package cars.data.db;
 import cars.data.Response;
 import cars.data.db.dao.CarDAO;
 import cars.data.db.dao.StatisticDAO;
-import cars.entity.Car;
-import cars.entity.Statistic;
+import cars.data.entity.Car;
+import cars.data.entity.Statistic;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.*;
