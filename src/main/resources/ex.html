@@ -2,7 +2,7 @@
 <head>
     <title>Cars</title>
 </head>
-<script >
+<script>
 
     function submitForm() {
     let number = document.querySelector('#number');
@@ -22,6 +22,7 @@
     }
      xhr.send(data);
 }
+
 </script>
 <body>
 <div id="header">
@@ -39,7 +40,7 @@
         </p>
         <p><input type="number" name="limit">Number of displayed items<Br>
         <p><input type="number" name="offset">Initial element</p>
-        <p><input type="submit"value="Submit"></p>
+        <p><input type="submit" value="Submit"></p>
     </form>
     <p><b>Add car:</b><Br>
     </p>
@@ -55,8 +56,11 @@
     <form action="http://localhost:8001/delete" method="get">
         <p><b>Delete car:</b><Br>
         <p><input type="number" name="id">Car ID<Br>
-        <p><input type="submit"  value="Delete"></p>
+        <p><input type="submit" value="Delete"></p>
     </form>
+
+    <p>
+        <a href="http://localhost:8001/stat">Show statistics on the cars database</a></p>
 </div>
 </body>
 </html>
