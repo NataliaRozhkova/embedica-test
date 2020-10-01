@@ -10,10 +10,15 @@ import java.util.concurrent.Executors;
 
 public class CarsHttpServer {
 
-    HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 8001), 0);
+    final String host;
+    final int port;
+    final HttpServer server;
     Repository repository = new Repository();
 
-    public CarsHttpServer() throws IOException {
+    public CarsHttpServer(String host, int port) throws IOException {
+        this.host = host;
+        this.port = port;
+        server = HttpServer.create(new InetSocketAddress(host, port), 0);
         server.createContext("/add", new PutCarHandler(repository));
         server.createContext("/", new StartServiceHandler());
         server.createContext("/list", new GetCarsHandler(repository));

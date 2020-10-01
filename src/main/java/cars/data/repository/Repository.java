@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Repository {
 
-    CarDBSource db = new CarDBSource("jdbc:postgresql://localhost:5432/", "carsuser", "123", "cars", "cars");
+    CarDBSource db = new CarDBSource();
 
     public Response<String> put(final Car car) {
         return db.create(car);

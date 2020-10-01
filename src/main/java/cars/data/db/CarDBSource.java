@@ -12,6 +12,12 @@ import java.util.List;
 
 public class CarDBSource {
 
+    private static final String URL = "jdbc:postgresql://localhost:5432/";
+    private static final String USER = "carsuser";
+    private static final String PASSWORD = "123";
+    private static final String DB_NAME = "cars";
+    private static final String DB_TABLE = "cars";
+
     private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS ";
     private static final String TABLE_DESCRIPTION = " (id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY, " +
             "number varchar(255) UNIQUE, " +
@@ -24,21 +30,11 @@ public class CarDBSource {
     private static final int MIN_NUMBER_IDLE_CONNECTION_IN_POOL = 10;
     private static final int MAX_NUMBER_IDLE_CONNECTION_IN_POOL = 20;
 
+
     private final BasicDataSource dataSource;
-    private final String url;
-    private final String user;
-    private final String password;
-    private final String dbName;
-    private final String dbTableName;
 
-
-    public CarDBSource(String url, String user, String password, String dbName, String dbTableName) {
-        this.url = url;
-        this.user = user;
-        this.password = password;
-        this.dbName = dbName;
-        this.dbTableName = dbTableName;
-        dataSource = initDataSource();
+    public CarDBSource() {
+        this.dataSource = initDataSource();
     }
 
     public Response<String> create(final Car car) {
@@ -83,9 +79,9 @@ public class CarDBSource {
 
     private BasicDataSource init() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setUrl(url + dbName);
-        dataSource.setUsername(user);
-        dataSource.setPassword(password);
+        dataSource.setUrl(URL + DB_NAME);
+        dataSource.setUsername(USER);
+        dataSource.setPassword(PASSWORD);
         dataSource.setMinIdle(MIN_NUMBER_IDLE_CONNECTION_IN_POOL);
         dataSource.setMaxIdle(MAX_NUMBER_IDLE_CONNECTION_IN_POOL);
         return dataSource;
@@ -96,7 +92,7 @@ public class CarDBSource {
             DatabaseMetaData metaData = dataSource.getConnection().getMetaData();
             ResultSet set = metaData.getCatalogs();
             while (set.next()) {
-                if (set.getString(DATABASE_NAME).equals(dbName)) {
+                if (set.getString(DATABASE_NAME).equals(DB_NAME)) {
                     return true;
                 }
             }
@@ -111,9 +107,9 @@ public class CarDBSource {
     private boolean validationDBTable(BasicDataSource dataSource) {
         try {
             DatabaseMetaData metaData = dataSource.getConnection().getMetaData();
-            ResultSet set = metaData.getTables(dbName, null, null, new String[]{"TABLE"});
+            ResultSet set = metaData.getTables(DB_NAME, null, null, new String[]{"TABLE"});
             while (set.next()) {
-                if (set.getString(DB_TABLE_NAME).equals(dbName)) {
+                if (set.getString(DB_TABLE_NAME).equals(DB_NAME)) {
                     return true;
                 }
             }
@@ -128,7 +124,7 @@ public class CarDBSource {
 
     private boolean createDBTable(BasicDataSource dataSource) {
         try {
-            PreparedStatement statement = dataSource.getConnection().prepareStatement(CREATE_TABLE + dbTableName + TABLE_DESCRIPTION);
+            PreparedStatement statement = dataSource.getConnection().prepareStatement(CREATE_TABLE + DB_TABLE + TABLE_DESCRIPTION);
             return statement.execute();
         } catch (SQLException exception) {
             exception.printStackTrace();

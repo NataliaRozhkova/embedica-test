@@ -17,18 +17,16 @@ class CarDAOTest {
 
     private static CarDBSource db;
 
-
     @BeforeAll
     public static void createDB() {
 
-        db = new CarDBSource("jdbc:postgresql://localhost:5432/", "carsuser", "123", "example", "cars");
+        db = new CarDBSource();
 
     }
 
     @AfterAll
-    public static void deleteDb() throws SQLException {
+    public static void deleteDbTable() throws SQLException {
         db.getDataSource().getConnection().prepareStatement("DROP TABLE cars").executeUpdate();
-//        db.getDataSource().getConnection().prepareStatement("DROP database example").executeUpdate();
     }
 
     @Test
