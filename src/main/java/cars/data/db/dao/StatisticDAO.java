@@ -1,7 +1,6 @@
 package cars.data.db.dao;
 
 import cars.data.Response;
-import cars.entity.Car;
 import cars.entity.Statistic;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.jetbrains.annotations.NotNull;
@@ -10,9 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class StatisticDAO {
+
     @NotNull
     private final BasicDataSource dbSource;
 
@@ -26,7 +25,7 @@ public class StatisticDAO {
         if (statistic.numberOfRecords != 0 || statistic.dateFirstEntryWasAdded != null || statistic.dateLastEntryWasAdded != null) {
             state = Response.State.SUCCESS;
         }
-        return new Response<Statistic>(statistic, state);
+        return new Response<>(statistic, state);
     }
 
     private int getCount() {
@@ -40,8 +39,11 @@ public class StatisticDAO {
             count = Integer.parseInt(set.getString("count"));
         } catch (SQLException exception) {
             count = 0;
+        } finally {
+            if (connection != null) {
+                closeConnection(connection);
+            }
         }
-        closeConnection(connection);
         return count;
     }
 
@@ -56,10 +58,14 @@ public class StatisticDAO {
             dateFirstEntryAdded = set.getString("date");
         } catch (SQLException exception) {
             dateFirstEntryAdded = null;
+        } finally {
+            if (connection != null) {
+                closeConnection(connection);
+            }
         }
-        closeConnection(connection);
         return dateFirstEntryAdded;
     }
+
     private String getDateLastEntryAdded() {
         Connection connection = null;
         String dateLastEntryAdded;
@@ -71,8 +77,11 @@ public class StatisticDAO {
             dateLastEntryAdded = set.getString("date");
         } catch (SQLException exception) {
             dateLastEntryAdded = null;
+        } finally {
+            if (connection != null) {
+                closeConnection(connection);
+            }
         }
-        closeConnection(connection);
         return dateLastEntryAdded;
     }
 

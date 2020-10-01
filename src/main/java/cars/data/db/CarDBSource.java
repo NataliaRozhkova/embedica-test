@@ -12,6 +12,18 @@ import java.util.List;
 
 public class CarDBSource {
 
+    private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS ";
+    private static final String TABLE_DESCRIPTION = " (id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY, " +
+            "number varchar(255) UNIQUE, " +
+            "brand varchar(255), " +
+            "color varchar(255), " +
+            "year_of_issue integer," +
+            "date timestamp)";
+    private static final int DATABASE_NAME = 1;
+    private static final int DB_TABLE_NAME = 3;
+    private static final int MIN_NUMBER_IDLE_CONNECTION_IN_POOL = 10;
+    private static final int MAX_NUMBER_IDLE_CONNECTION_IN_POOL = 20;
+
     private final BasicDataSource dataSource;
     private final String url;
     private final String user;
@@ -124,19 +136,4 @@ public class CarDBSource {
         }
 
     }
-
-    private final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS ";
-    private final String TABLE_DESCRIPTION = " (id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY, " +
-            "number varchar(255) UNIQUE, " +
-            "brand varchar(255), " +
-            "color varchar(255), " +
-            "year_of_issue integer," +
-            "date timestamp)";
-
-    private final int DATABASE_NAME = 1;
-    private final int DB_TABLE_NAME = 3;
-    private final int MIN_NUMBER_IDLE_CONNECTION_IN_POOL = 10;
-    private final int MAX_NUMBER_IDLE_CONNECTION_IN_POOL = 20;
-
-
 }

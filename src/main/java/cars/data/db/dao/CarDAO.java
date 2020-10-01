@@ -11,6 +11,16 @@ import java.util.List;
 
 public class CarDAO {
 
+    private static final int COLUMN_CAR_NUMBER = 1;
+    private static final int COLUMN_CAR_BRAND = 2;
+    private static final int COLUMN_CAR_COLOR = 3;
+    private static final int COLUMN_YEAR_OF_ISSUE = 4;
+    private static final int LIMIT = 1;
+    private static final int OFFSET = 2;
+    private static final int ID = 1;
+    private static final int SUCCESS = 1;
+    private static final int ERROR = 0;
+
     @NotNull
     private final BasicDataSource dbSource;
 
@@ -34,26 +44,29 @@ public class CarDAO {
             } else {
                 response = new Response<>("Error", Response.State.ERROR);
             }
+        } finally {
+            if (connection != null) {
+                closeConnection(connection);
+            }
         }
-        closeConnection(connection);
         return response;
     }
 
     public Response<List<Car>> readAll() {
-        ArrayList<Car> cars;
         Response<List<Car>> response;
         Connection connection = null;
         try {
             connection = dbSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(SQLCars.GET_ALL.QUERY);
-            cars = mappingToCar(statement.executeQuery());
+            ArrayList<Car> cars = mappingToCar(statement.executeQuery());
             response = new Response<>(cars, Response.State.SUCCESS);
         } catch (SQLException exception) {
             response = new Response<>(null, Response.State.ERROR);
-
+        } finally {
+            if (connection != null) {
+                closeConnection(connection);
+            }
         }
-        closeConnection(connection);
-
         return response;
     }
 
@@ -70,8 +83,11 @@ public class CarDAO {
             exception.printStackTrace();
             System.err.println(exception.getClass().getName() + ": " + exception.getMessage());
             response = new Response<>(null, Response.State.SUCCESS);
+        } finally {
+            if (connection != null) {
+                closeConnection(connection);
+            }
         }
-        closeConnection(connection);
         return response;
     }
 
@@ -93,8 +109,11 @@ public class CarDAO {
 
         } catch (SQLException exception) {
             response = new Response<>("Error", Response.State.ERROR);
+        } finally {
+            if (connection != null) {
+                closeConnection(connection);
+            }
         }
-        closeConnection(connection);
         return response;
     }
 
@@ -155,17 +174,6 @@ public class CarDAO {
         }
         return cars;
     }
-
-    private final int COLUMN_CAR_NUMBER = 1;
-    private final int COLUMN_CAR_BRAND = 2;
-    private final int COLUMN_CAR_COLOR = 3;
-    private final int COLUMN_YEAR_OF_ISSUE = 4;
-    private final int LIMIT = 1;
-    private final int OFFSET = 2;
-    private final int ID = 1;
-    private int SUCCESS = 1;
-    private int ERROR = 0;
-
 
     public enum SQLCars {
         GET_ALL("SELECT * FROM cars"),

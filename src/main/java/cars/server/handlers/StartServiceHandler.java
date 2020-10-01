@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class StartServiceHandler implements HttpHandler {
@@ -21,20 +22,22 @@ public class StartServiceHandler implements HttpHandler {
         OutputStream outputStream = httpExchange.getResponseBody();
         httpExchange.sendResponseHeaders(200, htmlPage.length());
 
-        outputStream.write(htmlPage.getBytes("UTF-8"));
+        outputStream.write(htmlPage.getBytes(StandardCharsets.UTF_8));
         outputStream.flush();
         outputStream.close();
     }
 
     private static String getFile() {
-        InputStream is = StartServiceHandler.class.getClassLoader().getResourceAsStream("ex.html");
-        Scanner scanner = new Scanner(is, "UTF-8");
-        StringBuilder result = new StringBuilder("");
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            result.append(line).append("\n");
+        InputStream htmlFile = StartServiceHandler.class.getClassLoader().getResourceAsStream("ex.html");
+        StringBuilder result = new StringBuilder();
+        if (htmlFile != null) {
+            Scanner scanner = new Scanner(htmlFile, StandardCharsets.UTF_8);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                result.append(line).append("\n");
+            }
+            scanner.close();
         }
-        scanner.close();
         return result.toString();
     }
 

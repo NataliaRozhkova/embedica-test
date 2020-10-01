@@ -25,7 +25,7 @@ public class CarJSONConverter {
         }
     }
 
-    public static String convertToJSON (final List<Car> cars) {
+    public static String convertToJSON(final List<Car> cars) {
         try {
             return new ObjectMapper().writeValueAsString(cars);
         } catch (IOException e) {
@@ -33,7 +33,6 @@ public class CarJSONConverter {
             return null;
         }
     }
-
 
 
 }

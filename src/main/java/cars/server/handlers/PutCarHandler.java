@@ -1,7 +1,6 @@
 package cars.server.handlers;
 
 import cars.data.Response;
-import cars.entity.Car;
 import cars.entity.CarJSONConverter;
 import cars.data.repository.Repository;
 import com.sun.net.httpserver.HttpExchange;
@@ -9,11 +8,10 @@ import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 public class PutCarHandler extends BaseHandler<String, String> implements HttpHandler {
 
-    private Repository repository;
+    private final Repository repository;
 
     public PutCarHandler(Repository repository) {
         this.repository = repository;

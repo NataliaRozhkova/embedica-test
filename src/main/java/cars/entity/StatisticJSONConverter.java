@@ -15,15 +15,4 @@ public class StatisticJSONConverter {
             return null;
         }
     }
-
-    public static Statistic deserialize(final String json) {
-        try {
-            return new ObjectMapper().readValue(json, Statistic.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-
 }

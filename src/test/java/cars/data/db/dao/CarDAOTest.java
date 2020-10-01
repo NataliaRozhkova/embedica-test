@@ -46,7 +46,7 @@ class CarDAOTest {
     void readAll() {
         Car car = new Car(2, "n133nn", "brand", "f", 2003);
         db.create(car);
-       List<Car> list = db.getAll().body;
+        List<Car> list = db.getAll().body;
         assertNotEquals(0, list.size());
     }
 

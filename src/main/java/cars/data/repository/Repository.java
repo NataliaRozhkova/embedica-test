@@ -28,7 +28,7 @@ public class Repository {
     }
 
     public Response<Statistic> getStatistic() {
-        return  db.getStatistic();
+        return db.getStatistic();
     }
 
 

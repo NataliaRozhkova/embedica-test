@@ -4,11 +4,14 @@ import cars.data.Response;
 import cars.data.repository.Repository;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+
 import java.util.HashMap;
 
 public class DeleteCarHandler extends BaseHandler<HashMap<String, String>, String> implements HttpHandler {
 
-    private Repository repository;
+    private static final String ID = "id";
+
+    private final Repository repository;
 
     public DeleteCarHandler(Repository repository) {
         this.repository = repository;
@@ -28,7 +31,7 @@ public class DeleteCarHandler extends BaseHandler<HashMap<String, String>, Strin
     }
 
     @Override
-    HashMap<String, String> handlePostRequest(HttpExchange httpExchangeParameters)   {
+    HashMap<String, String> handlePostRequest(HttpExchange httpExchangeParameters) {
         return null;
     }
 
@@ -46,7 +49,4 @@ public class DeleteCarHandler extends BaseHandler<HashMap<String, String>, Strin
     private long getId(final HashMap<String, String> requestParameters) {
         return Long.parseLong(requestParameters.get(ID));
     }
-
-
-    private String ID = "id";
 }

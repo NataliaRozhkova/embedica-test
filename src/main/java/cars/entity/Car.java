@@ -35,14 +35,10 @@ public class Car {
         if (!(obj instanceof Car)) {
             return false;
         }
-        if (obj != null
-                && ((Car) obj).yearOfIssue == this.yearOfIssue
+        return this.yearOfIssue == ((Car) obj).yearOfIssue
                 && this.color.equals(((Car) obj).color)
                 && this.brand.equals(((Car) obj).brand)
-                && this.number.equals(((Car) obj).number)) {
-            return true;
-        }
-        return false;
+                && this.number.equals(((Car) obj).number);
     }
 
     @Override

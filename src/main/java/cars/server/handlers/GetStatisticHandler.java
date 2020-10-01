@@ -9,10 +9,11 @@ import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 public class GetStatisticHandler implements HttpHandler {
 
-    private Repository repository;
+    private final Repository repository;
 
     public GetStatisticHandler(Repository repository) {
         this.repository = repository;
@@ -28,7 +29,7 @@ public class GetStatisticHandler implements HttpHandler {
         String statistic = presentResponse(requestRepository());
         httpExchange.sendResponseHeaders(200, statistic.length());
 
-        outputStream.write(statistic.getBytes("UTF-8"));
+        outputStream.write(statistic.getBytes(StandardCharsets.UTF_8));
         outputStream.flush();
         outputStream.close();
     }

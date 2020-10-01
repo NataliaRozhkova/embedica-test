@@ -28,20 +28,15 @@ public class Statistic {
         if (!(obj instanceof Statistic)) {
             return false;
         }
-        if (obj != null
-                && ((Statistic) obj).numberOfRecords == this.numberOfRecords
+        return this.numberOfRecords == ((Statistic) obj).numberOfRecords
                 && this.dateFirstEntryWasAdded.equals(((Statistic) obj).dateFirstEntryWasAdded)
-                && this.dateLastEntryWasAdded.equals(((Statistic) obj).dateLastEntryWasAdded)
-        ) {
-            return true;
-        }
-        return false;
+                && this.dateLastEntryWasAdded.equals(((Statistic) obj).dateLastEntryWasAdded);
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
-        return prime * (int) numberOfRecords + dateLastEntryWasAdded.hashCode() + dateFirstEntryWasAdded.hashCode();
+        return prime * numberOfRecords + dateLastEntryWasAdded.hashCode() + dateFirstEntryWasAdded.hashCode();
     }
 
 

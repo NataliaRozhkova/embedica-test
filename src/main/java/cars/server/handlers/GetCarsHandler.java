@@ -7,23 +7,24 @@ import cars.data.repository.Repository;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 
-public class GetCarsHandler extends BaseHandler<HashMap<String, String>, List<Car>> implements HttpHandler  {
+public class GetCarsHandler extends BaseHandler<HashMap<String, String>, List<Car>> implements HttpHandler {
 
-    private Repository repository;
+    private static final String SORT_PARAMETER = "sort_parameter";
+    private static final String LIMIT = "limit";
+    private static final String OFFSET = "offset";
+
+    private final Repository repository;
 
     public GetCarsHandler(Repository repository) {
         this.repository = repository;
     }
 
-
     @Override
     HashMap<String, String> handleGetRequest(HttpExchange httpExchange) {
-        String httpExchangeParameters =  httpExchange.getRequestURI().getQuery();
+        String httpExchangeParameters = httpExchange.getRequestURI().getQuery();
         if (httpExchangeParameters != null) {
             HashMap<String, String> parameters = new HashMap<>();
             for (String parameter : httpExchangeParameters.split("&")) {
@@ -34,14 +35,13 @@ public class GetCarsHandler extends BaseHandler<HashMap<String, String>, List<Ca
         } else return null;
     }
 
-
     @Override
     HashMap<String, String> handlePostRequest(HttpExchange httpExchangeParameters) {
         return null;
     }
 
     @Override
-    Response<List<Car>> requestRepository( HashMap<String, String> requestParameter) {
+    Response<List<Car>> requestRepository(HashMap<String, String> requestParameter) {
         if (requestParameter != null) {
             return repository.getAll(
                     requestParameter.get(SORT_PARAMETER),
@@ -54,11 +54,6 @@ public class GetCarsHandler extends BaseHandler<HashMap<String, String>, List<Ca
 
     @Override
     String presentResponse(Response<List<Car>> response) {
-      return   CarJSONConverter.convertToJSON(response.body);
+        return CarJSONConverter.convertToJSON(response.body);
     }
-
-    private final String SORT_PARAMETER = "sort_parameter";
-    private final String LIMIT = "limit";
-    private final String OFFSET = "offset";
-
 }

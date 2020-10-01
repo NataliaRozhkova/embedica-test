@@ -25,7 +25,7 @@ public abstract class BaseHandler<T, K> implements HttpHandler {
 
     abstract T handlePostRequest(HttpExchange httpExchangeParameters) throws IOException;
 
-    abstract Response<K> requestRepository (T requestParameter);
+    abstract Response<K> requestRepository(T requestParameter);
 
     abstract String presentResponse(Response<K> response);
 
@@ -37,8 +37,6 @@ public abstract class BaseHandler<T, K> implements HttpHandler {
         outputStream.flush();
         outputStream.close();
     }
-
-
 
 
 }

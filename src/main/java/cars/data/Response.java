@@ -12,7 +12,7 @@ public class Response<T> {
 
     public enum State {
         SUCCESS,
-        ERROR;
+        ERROR
     }
 
 }
